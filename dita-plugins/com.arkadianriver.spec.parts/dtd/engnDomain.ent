@@ -20,8 +20,6 @@
                           CDATA
                                     #IMPLIED"
 >
-<!ELEMENT  epartl %epartl.content;>
-<!ATTLIST  epartl %epartl.attributes;>
 
 <!--                    LONG NAME: Engine Part List Entry            -->
 <!ENTITY % epentry.content
@@ -34,8 +32,6 @@
                           CDATA
                                     #IMPLIED"
 >
-<!ELEMENT  epentry %epentry.content;>
-<!ATTLIST  epentry %epentry.attributes;>
 
 
 <!--                    LONG NAME: Engine Part Term                  -->
@@ -51,8 +47,6 @@
                           CDATA
                                     #IMPLIED"
 >
-<!ELEMENT  epname %epname.content;>
-<!ATTLIST  epname %epname.attributes;>
 
 
 <!--                    LONG NAME: Engine Part Description           -->
@@ -65,15 +59,17 @@
                           CDATA
                                     #IMPLIED"
 >
-<!ELEMENT  epdesc %epdesc.content;>
-<!ATTLIST  epdesc %epdesc.attributes;>
 
 <!-- Generalized entities -->
-<!ENTITY % ep-d-dl
+<!ENTITY % engn-d-dl
   "epartl"
 >
 
 <!ENTITY % dl           "dl |
                          %pr-d-dl; |
-												 %ep-d-dl;
+												 %engn-d-dl;
                         ">
+
+<!ENTITY engn-d-att
+  "(topic engn-d)"
+>
