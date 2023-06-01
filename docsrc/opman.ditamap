@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!DOCTYPE bookmap PUBLIC "-//OASIS//DTD DITA BookMap//EN" "bookmap.dtd">
+<bookmap id="opman">
+	<booktitle>
+		<booklibrary>ARKKAR FX-23</booklibrary>
+		<mainbooktitle>Operator's Manual</mainbooktitle>
+	</booktitle>
+	<bookmeta>
+		<bookrights>
+			<copyrfirst>
+				<year>2017</year>
+			</copyrfirst>
+			<bookowner>
+				<organization>ARKKAR</organization>
+			</bookowner>
+		</bookrights>
+		<!--
+		<data name="cover-image"><image href="images/cover.png" width="297mm"/></data>
+		-->
+	</bookmeta>
+	<frontmatter>
+		<booklists><toc /></booklists>
+	</frontmatter>
+	<chapter href="om_oper_chapter.dita">
+		<topicref href="om_oper_safety.dita" linking="targetonly"/>
+		<topicref href="om_oper_emergency.dita" linking="targetonly"/>
+		<topicref href="om_oper_instructions.dita" linking="targetonly"/>
+	</chapter>
+	<chapter href="om_maint_chapter.dita">
+		<topicref href="om_maint_t1.dita" linking="targetonly"/>
+	</chapter>
+	<chapter href="om_warranty_chapter.dita">
+		<topicref href="om_warranty_t1.dita" linking="targetonly"/>
+	</chapter>
+  <backmatter>
+		<notices href="notices.dita"/>
+    <booklists>
+      <indexlist/>
+    </booklists>
+  </backmatter>
+</bookmap>

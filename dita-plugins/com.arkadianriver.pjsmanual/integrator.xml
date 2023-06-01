@@ -1,0 +1,118 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE project>
+<project>
+
+  <!--
+  DITA's required dita2<my-transtype> target entry point.
+  -->
+  <target
+    name="dita2pjsmanual"
+    depends="
+      pjsmanual.init,
+      build-init,
+      preprocess2,
+      bookmap2merged,
+      merged2pjshtml,
+      pjshtml2pdf
+    ">
+    <copy file="${pdf.file}"
+      todir="${dita.output.dir}" />
+  </target>
+
+  <!-- 
+    Checking if PagedJS is installed.
+  -->
+  <target name="pjsmanual.init">
+    <exec
+      resultproperty="pjsResult"
+      executable="pagedjs-cli"
+      discardOutput="true"
+      failonerror="false"
+      failifexecutionfails="false">
+      <arg value="--help" />
+    </exec>
+    <condition property="noPagedJS">
+      <not>
+        <equals arg1="0" arg2="${pjsResult}" />
+      </not>
+    </condition>
+    <antcall target="show-installdoc" />
+  </target>
+
+  <target name="show-installdoc" if="noPagedJS">
+    <echo>
+      Install Paged.js first:
+
+      1. Install Node Version Manager (nvm):
+      - Mac/Linux: https://github.com/nvm-sh/nvm#installing-and-updating
+      - Windows: https://github.com/coreybutler/nvm-windows#nvm-for-windows
+
+      2. Use nvm to install the latest version of node:
+      - Mac/Linux: nvm install --lts
+      - Windows: nvm install lts
+
+      3. Install Paged.js by running: npm install -g pagedjs-cli pagedjs
+    </echo>
+    <fail status="1" message="Paged.js not available." />
+  </target>
+
+  <!--
+  The merge target copied from pdf2 ..
+  but without the subsequent calling of the publish PDF-creation targets.
+  (since we want to transform to HTML5/CSS instead for PagedJS to take over.)
+  -->
+  <target name="bookmap2merged">
+    <property name="merged.file" value="${dita.map.filename.root}_MERGED.xml" />
+    <dirname property="dita.temp.dir.fullpath" file="${dita.temp.dir}${file.separator}dummy.file" />
+    <pipeline message="topicmerge" taskname="topic-merge"
+      inputmap="${dita.temp.dir.fullpath}${file.separator}${user.input.file}">
+      <module class="org.dita.dost.module.TopicMergeModule">
+        <param name="output" location="${dita.temp.dir.fullpath}${file.separator}${merged.file}" />
+        <param name="style" location="${dita.plugin.org.dita.pdf2.dir}/xsl/common/topicmerge.xsl" />
+      </module>
+    </pipeline>
+  </target>
+
+  <!--
+  Run our xslt xsl/dita2pjsmanual.xls file..
+  which overrides modified org.dita.html5 targets.
+  -->
+  <target name="merged2pjshtml" depends="bookmap2merged">
+    <echo>Converting the Merged XML file to a PagedJS-ready HTML file.</echo>
+    <property
+      name="dita_merged.file"
+      value="${dita.temp.dir.fullpath}${file.separator}${merged.file}"
+    />
+    <basename property="user.input.base" file="${user.input.file}" suffix=".ditamap"/>
+    <property
+      name="html.file"
+      value="${dita.temp.dir.fullpath}${file.separator}${user.input.base}.html"
+    />
+    <property
+      name="xsl.file"
+      value="${dita.plugin.com.arkadianriver.pjsmanual.dir}${file.separator}xsl${file.separator}dita2pjsmanual.xsl"
+    />
+    <xslt in="${dita_merged.file}" out="${html.file}" style="${xsl.file}">
+      <xmlcatalog refid="dita.catalog"/>
+    </xslt>
+  </target>
+
+  <!--
+    Assuming we installed PagedJS, just run it.
+  -->
+  <target name="pjshtml2pdf" depends="merged2pjshtml">
+    <echo>Running PagedJS to create the PDF.</echo>
+    <property
+      name="pdf.file"
+      value="${dita.temp.dir.fullpath}${file.separator}${user.input.base}.pdf"/>
+    <exec
+      resultproperty="pjsResult"
+      executable="pagedjs-cli">
+      <arg value="-i"/>
+      <arg value="${html.file}"/>
+      <arg value="-o"/>
+      <arg value="${pdf.file}" />
+    </exec>
+  </target>
+
+</project>

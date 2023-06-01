@@ -1,0 +1,156 @@
+@media print {
+	body {
+		font-family: Helvetica, Arial, sans-serif;
+	}
+	@page {
+		size: 297mm 210mm;
+		margin: 20mm;
+	}
+	#cover {
+		page: cover;
+	}
+	#cover img {
+		height: 210mm;
+	}
+	@page cover {
+		margin: 0 0;
+		width: 297mm;
+	}
+	#table-of-content {
+		page: toc;
+	}
+	@page toc {
+		columns: 1 auto;
+		break-before: page;
+		break-after: page;
+		text-align: left;
+		margin: 10mm 40mm 10mm 10mm;
+	}
+	#table-of-content > h2 {
+		font-size: 18;
+		font-weight: normal;
+		border-bottom: 1px solid black;
+		margin-bottom: 48pt;
+	}
+	#table-of-content > ol {
+		counter-reset: list-item;
+		margin-right: -60mm;
+		font-size: 22pt;
+		font-weight: bold;
+		text-align: right;
+	}
+	#table-of-content > ol li {
+		margin: 32pt 0 32pt 0;
+		list-style-type: none;
+	}
+	#table-of-content > ol li a {
+		text-decoration: none;
+	}
+	#table-of-content > ol li {
+		padding-right: 20mm;
+		white-space: pre;
+		margin-right: 0;
+	}
+	#table-of-content > ol li a::after {
+		counter-increment: list-item;
+		content: counter(list-item);
+		white-space: pre;
+		background-color: gray;
+		color: white;
+		margin-left: 60mm;
+		padding: 3pt 12pt 3pt 12pt;
+	}
+	#edition-notice {
+		page: frontmatter;
+	}
+	@page frontmatter {
+		columns: 1 auto;
+		margin-left: 108mm;
+	}
+	#edition-notice {
+		text-align: justify;
+	}
+	#edition-notice > h1 {
+		text-align: right;
+		font-size: 18pt;
+		font-weight: normal;
+	}
+	#content {
+		counter-reset: chapter;
+	}
+	.chapter {
+		break-before: page;
+		counter-increment: chapter;
+	}
+	.chapter-heading {
+		page: chapterheading;
+	}
+	@page chapterheading {
+		columns: 1;
+	}
+	.chapter-heading > h2 {
+		font-weight: bold;
+		font-size: 36pt;
+	}
+	.chapter-heading > h2::before {
+		content: "Chapter " counter(chapter) " | ";
+	}
+	.chapter-heading > h2::after {
+		font-size: 20pt;
+		font-weight: normal;
+		content: "\0AIn this Chapter:\0A";
+		white-space: pre;
+	}
+	.chapter-toc {
+		margin-left: 20mm;
+		break-after: page;
+		font-size: 1.4em;
+	}
+	.chapter-toc li {
+		display: flex;
+		line-height: 2.2rem;
+	}
+	.chapter-toc li a {
+		order: 1;
+		text-decoration: none;
+	}
+	.chapter-toc li .folio {
+		order: 3;
+	}
+	.chapter-toc li::after {
+		background-image: radial-gradient(
+			circle,
+			currentcolor 1px,
+			transparent 1.5px
+		);
+		background-position: bottom;
+		background-size: 1ex 4.5px;
+		background-repeat: space no-repeat;
+		content: "";
+		flex-grow: 1;
+		height: 1em;
+		order: 2;
+	}
+	.chapter-body {
+		columns: 3 auto;
+		column-gap: 5mm;
+	}
+	.warning {
+		display: flex;
+		flex-direction: column;
+	}
+	.warningtitle {
+		border: 1px solid black;
+		display: block;
+		padding: 3pt 6pt 3pt 6pt;
+		font-weight: bold;
+	}
+	.warningtitle::before {
+		content: url("../hello-truck-world/docsrc/images/warning.gif") " ";
+		vertical-align: middle;
+	}
+	.warningbody {
+		border: 1px solid black;
+		padding: 3pt 6pt 3pt 6pt;
+	}
+}

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="https://www.dita-ot.org/rng/plugin.rnc" type="application/relax-ng-compact-syntax"?>
+
+<plugin id="com.arkadianriver.pjsmanual">
+
+	<!-- Defines the new transtype 'pjsmanual' extended from pdf2. -->
+	<transtype name="pjsmanual" extends="pdf2" desc="A PagedJS HTML/CSS-created PDF"/>
+	
+	<!-- Creates the dita2pjsmanual extension to the print transtype. -->
+	<feature extension="dita.transtype.print" value="pjsmanual"/>
+
+	<!-- Contains ant targets to be added to the default dita build.xml file. -->
+	<feature extension="ant.import" file="integrator.xml"/>
+
+	<!-- Only to access the template that merges the dita files into one. -->
+	<require plugin="org.dita.pdf2"/>
+
+	<!-- These are the templates we'll need to override for PagedJS. -->
+	<require plugin="org.dita.html5"/>
+
+</plugin>
