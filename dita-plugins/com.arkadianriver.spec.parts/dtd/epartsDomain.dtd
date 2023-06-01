@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--                    LONG NAME: Engine Part List                  -->
+<!ENTITY % epartl.content
+                       "((%data; |
+                          %data-about;)*,
+                         (%epentry;)+)"
+>
+<!ENTITY % epartl.attributes
+              "compact
+                          (yes |
+                           no |
+                           -dita-use-conref-target)
+                                    #IMPLIED
+               spectitle
+                          CDATA
+                                    #IMPLIED
+               %univ-atts;
+               outputclass
+                          CDATA
+                                    #IMPLIED"
+>
+<!ELEMENT  epartl %epartl.content;>
+<!ATTLIST  epartl %epartl.attributes;>
+
+<!--                    LONG NAME: Engine Part List Entry            -->
+<!ENTITY % epentry.content
+                       "((%epname;)+,
+                         (%epdesc;)+)"
+>
+<!ENTITY % epentry.attributes
+              "%univ-atts;
+               outputclass
+                          CDATA
+                                    #IMPLIED"
+>
+<!ELEMENT  epentry %epentry.content;>
+<!ATTLIST  epentry %epentry.attributes;>
+
+
+<!--                    LONG NAME: Engine Part Term                  -->
+<!ENTITY % epname.content
+                       "(%term.cnt;)*"
+>
+<!ENTITY % epname.attributes
+              "keyref
+                          CDATA
+                                    #IMPLIED
+               %univ-atts;
+               outputclass
+                          CDATA
+                                    #IMPLIED"
+>
+<!ELEMENT  epname %epname.content;>
+<!ATTLIST  epname %epname.attributes;>
+
+
+<!--                    LONG NAME: Engine Part Description           -->
+<!ENTITY % epdesc.content
+                       "(%defn.cnt;)*"
+>
+<!ENTITY % epdesc.attributes
+              "%univ-atts;
+               outputclass
+                          CDATA
+                                    #IMPLIED"
+>
+<!ELEMENT  epdesc %epdesc.content;>
+<!ATTLIST  epdesc %epdesc.attributes;>
+
+<!-- Generalized entities -->
+<!ENTITY % ep-d-dl
+  "epartl"
+>
+
+<!ENTITY % dl           "dl |
+                         %pr-d-dl; |
+												 %ep-d-dl;
+                        ">

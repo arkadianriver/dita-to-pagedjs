@@ -18,4 +18,7 @@
 	<!-- These are the templates we'll need to override for PagedJS. -->
 	<require plugin="org.dita.html5"/>
 
+	<!-- Also use my engine parts specialization -->
+	<require plugin="com.arkadianriver.spec.parts"/>
+
 </plugin>
